@@ -25,16 +25,7 @@
 - [**Versions**](#version)
 
 <!--
-list_delete
-list_init
-list_is_empty
-list_insert
-list_pop
-list_pop_begin
-list_push
-list_push_back
-list_remove
-list_size
+
 #define lst_push(self, data) self=list_push(self,data)
 #define lst_push_back(self, data) self=list_push_back(self,data)
 #define lst_pop(self) list_pop(&self)
@@ -106,9 +97,7 @@ Esta função insere um dado em alguma posicao de uma lista.
 - ## function prototype :  
    
 ```c
-
 List list_insert(List self, size_t index, void* data);
-
 ```
 
 - ## parameters:
@@ -276,9 +265,7 @@ size_t list_size(List self);
 
 - ## returns:
   - `(size_t)` : retorna o tamanho da lista ou 0 caso `self` ou `self->begin`sejam `NULL`.
-- ## note:
-  .
-
+  
 - ## example of use:
 ```c
 /*imagine uma lista com [1, 2, 3, 4]*/
