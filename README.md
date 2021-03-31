@@ -6,9 +6,9 @@
   Welcome to the <b>README</b> of the <b>fchlib_list</b> library.
 </p>
 
-# Description  
+# Description
 
-**fchlib_list** é uma biblioteca escrita em C responsavel por manipular uma estrutura de dados do tipo lista duplamente encadeada. A biblioteca dispoe de funções variadas de inserção e remoção de dados.
+**fchlib_list** is a library written in C responsible for handling a double-linked list data structure. The library has a variety of data insertion and removal functions. The List structure offers support for generic types through pointer (void*).
 
 # <a name=index>Table of contents</a>
  
@@ -24,19 +24,8 @@
 - [**list_size**](#list_size)
 - [**Versions**](#version)
 
-<!--
-
-#define lst_push(self, data) self=list_push(self,data)
-#define lst_push_back(self, data) self=list_push_back(self,data)
-#define lst_pop(self) list_pop(&self)
-#define lst_pop_begin(self) list_pop_begin(&self)
-#define lst_remove(self, index) list_remove(&self,index)
-#define lst_delete(self, free_data) self=list_delete(self,free_data)
-#define lst_insert(self, index, data) self=list_insert(self,index,data)
---->
-
 # **<a name=list_delete>list_delete</a>**  <h6>[back to indice](#index)</h6>
-Esta função libera a memoria alocada por uma estrutura do tipo lista.
+This function frees the memory allocated by a list type structure.
 
 - ## function prototype :  
    
@@ -45,17 +34,22 @@ List list_delete(List self,void (*free_data)(void* data));
 ```
 
 - ## parameters:
-  - self `(List)`: lista a ser liberada.
-  - free_data `function`: um ponteiro para uma função adequada de liberação de memoria para o tipo de dado armazenado em `self`.
+  - self `(List)`: source list.
+  - free_data `function`: a pointer to an appropriate memory release function for the type of data stored in `self`.
 - ## returns:
-  - `(NULL)`: esta função retorna `NULL`.
+  - `(NULL)`: this function returns `NULL`.
 
 - ## example of use:
 ```c
 list = lits_delete(list, free_data);
 ```
+or using the **lst_delete** macro:
+```c
+lst_delete(list, free_data);
+```
+
 # **<a name=list_init>list_init</a>**  <h6>[back to indice](#index)</h6>
-Esta função é responsavel por alocar e inicializar um objeto `(List)`.
+This function is responsible for allocating and initializing a `(List)` object.
 
 - ## function prototype :  
    
@@ -66,33 +60,14 @@ List list_init(void);
 - ## parameters:
   `None`
 - ## returns:
-  - `(List)`: retorna um ponteiro para um `(List)` recem alocado ou `NULL` em caso de falha.
+  - `(List)`: returns a pointer to a newly allocated `(List)` or `NULL` in case of failure.
 
 - ## example of use:
 ```c
 List list = list_init();
 ```
-# **<a name=list_is_empty>list_is_empty</a>**  <h6>[back to indice](#index)</h6>
-Esta função verifica se um objeto `(List)` é vazio.
-
-- ## function prototype :  
-   
-```c
-bool list_is_empty(List self);
-```
-
-- ## parameters:
-  - self `(List)`: lista a ser verificada.
-
-- ## returns:
-  - `(bool)`: return `true` se `self` é `NULL` ou se `self->begin` é `NULL`.
-
-- ## example of use:
-```c
-bool is_empty = list_is_empty(list);
-```
 # **<a name=list_insert>list_insert</a>**  <h6>[back to indice](#index)</h6>
-Esta função insere um dado em alguma posicao de uma lista.
+This function inserts data into a list at a given position.
 
 - ## function prototype :  
    
@@ -101,12 +76,12 @@ List list_insert(List self, size_t index, void* data);
 ```
 
 - ## parameters:
-  - self `(List)`: lista de origem.
-  - index `(size_t)`: posição a ser inserida.
-  - data `(void*)`: o dado a ser inserido.
+  - self `(List)`: source list.
+  - index `(size_t)`: position to be inserted.
+  - data `(void*)`: the data to be inserted.
 
 - ## returns:
-  - `(List)`: retorna a mesma referencia a `self`.
+  - `(List)`: returns the same reference to `self`.
 
 - ## example of use:
 ```c
@@ -124,12 +99,52 @@ list = list_insert(list, 0, a);
 list = list_insert(list, 0, b);
 list = list_insert(list, 0, c);
 
-/*list contains [ 11, 10, 9]*/
+/*result: the list contains [11, 10, 9]*/
 
 a = b = c = NULL;
 ```
+or using the **lst_insert** macro:
+```c
+int *a=NULL, *b=NULL, *c=NULL;
+
+a = (int)malloc(sizeof int);
+b = (int)malloc(sizeof int);
+c = (int)malloc(sizeof int);
+
+*a = 9;
+*b = 10;
+*c = 11;
+
+lst_insert(list, 0, a);
+lst_insert(list, 0, b);
+lst_insert(list, 0, c);
+
+/*result: the list contains [11, 10, 9]*/
+
+a = b = c = NULL;
+```
+# **<a name=list_is_empty>list_is_empty</a>**  <h6>[back to indice](#index)</h6>
+This function checks whether an `(List)` object is empty.
+
+- ## function prototype :  
+   
+```c
+bool list_is_empty(List self);
+```
+
+- ## parameters:
+  - self `(List)`: list to be checked.
+
+- ## returns:
+  - `(bool)`: returns `true` if` self` is `NULL` or if` self-> begin` is `NULL`.
+
+- ## example of use:
+```c
+bool is_empty = list_is_empty(list);
+```
+
 # **<a name=list_pop>list_pop</a>**  <h6>[back to indice](#index)</h6>
-Esta função remove o ultimo elemento de uma lista.
+This function removes the last element from a list.
 
 - ## function prototype :  
    
@@ -138,22 +153,28 @@ void* list_pop(List* self);
 ```
 
 - ## parameters:
-  - self `(List*)`: ponteiro para o endereço da lista de origem.
+  - self `(List*)`: pointer to the list address.
 
 - ## returns:
-  - `(void*)`: libera o ultimo nó da lista e retorna o ponteiro para o dado armazenado. Em caso de falha ele retorna `NULL`.
+  - `(void*)`: releases the last node in the list and returns the pointer to the stored data. In case of failure, returns `NULL`.
 
 - ## note:
-  Esta função não libera o dado retornado, lembre-se de libera-lo manualmente.
+  This function does not release the returned data, remember to release them manually.
 
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3]*/
+List list = ... /*suppose a list with [1, 2, 3]*/
 int *data = list_pop( &list );
 printf("number %d\n", *data); /*print "number 3"*/
 ```
+or using the **lst_pop**  macro:
+```c
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = lst_pop( list );
+printf("number %d\n", *data); /*print "number 3"*/
+```
 # **<a name=list_pop_begin>list_pop_begin</a>**  <h6>[back to indice](#index)</h6>
-Esta função remove o primeiro dado presente em uma lista.
+This function removes the first element from a list.
 
 - ## function prototype :  
    
@@ -162,22 +183,28 @@ void* list_pop_begin(List* self);
 ```
 
 - ## parameters:
-  - self `(List*)`: ponteiro para o endereço da lista de origem.
+  - self `(List*)`: pointer to the list address.
 
 - ## returns:
-  - `(void*)`: libera o primeiro nó da lista e retorna o ponteiro para o dado armazenado. Em caso de falha ele retorna `NULL`.
+- `(void*)`: releases the first node in the list and returns the pointer to the stored data. In case of failure, return `NULL`.
 
 - ## note:
-  Esta função não libera o dado retornado, lembre-se de libera-lo manualmente.
+  This function does not release the returned data, remember to release them manually.
 
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3]*/
+List list = ... /*suppose a list with [1, 2, 3]*/
 int *data = list_pop_begin( &list );
 printf("number %d\n", *data); /*print "number 1"*/
 ```
+or using the **lst_pop_begin** macro:
+```c
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = lst_pop_begin( list );
+printf("number %d\n", *data); /*print "number 1"*/
+```
 # **<a name=list_push>list_push</a>**  <h6>[back to indice](#index)</h6>
-Esta função insere um dado no inicio de uma lista.
+This function inserts an element at the beginning of a list.
 
 - ## function prototype :  
    
@@ -185,48 +212,65 @@ Esta função insere um dado no inicio de uma lista.
 List list_push(List self, void* data);
 ```
 - ## parameters:
-  - self `(List)`: lista de origem.
-  - dado `(void*)`: dado a ser inserido.
+  - self `(List)`: source list.
+  - data `(void*)`: data to be inserted.
 
 - ## returns:
-  - `(List)` : retorna a mesma referencia a `self`.
+  - `(List)`: returns the same reference to `self`.
 
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3]*/
+List list = ... /*suppose a list with [1, 2, 3]*/
 int *data = (int)malloc(sizeof int);
 *data = 4;
 list = list_push( list, data);
 data = NULL;
 /*list contains [4, 1, 2, 3]*/
 ```
+or using the **lst_push** macro:
+```c
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = (int)malloc(sizeof int);
+*data = 4;
+lst_push( list, data);
+data = NULL;
+/*list contains [4, 1, 2, 3]*/
+```
 # **<a name=list_push_back>list_push_back</a>**  <h6>[back to indice](#index)</h6>
-Esta função insere um dado ao final de uma lista.
+This function inserts an element at the end of a list.
 
 - ## function prototype :  
    
 ```c
 List list_push_back(List self, void* data);
 ```
-
 - ## parameters:
-  - self `(List)`: lista de origem.
-  - dado `(void*)`: dado a ser inserido.
+  - self `(List)`: source list.
+  - data `(void*)`: data to be inserted.
 
 - ## returns:
-  - `(List)` : retorna a mesma referencia a `self`.
+  - `(List)`: returns the same reference to `self`.
 
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3]*/
+List list = ... /*suppose a list with [1, 2, 3]*/
 int *data = (int)malloc(sizeof int);
 *data = 4;
 list = list_push_back( list, data);
 data = NULL;
-/*list contains [1, 2, 3, 4]*/
+/*result: list contains [1, 2, 3, 4]*/
+```
+or using the **lst_push_back** macro:
+```c
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = (int)malloc(sizeof int);
+*data = 4;
+lst_push_back( list, data);
+data = NULL;
+/*result: list contains [1, 2, 3, 4]*/
 ```
 # **<a name=list_remove>list_remove</a>**  <h6>[back to indice](#index)</h6>
-Esta função remove um dado em uma determinada posicao da lista.
+This function removes an element at a certain position in the list.
 
 - ## function prototype :  
    
@@ -235,24 +279,31 @@ void* list_remove(List* self, size_t index);
 ```
 
 - ## parameters:
-  - self `(List*)`: ponteiro para o endereço da lista de origem.
-  - index `(size_t)`: posição do elemento a ser removido.
+  - self `(List *)`: pointer to the address of the list.
+  - index `(size_t)`: position of the element to be removed.
 
 - ## returns:
-  - `(void*)`: libera o nó da lista e retorna o ponteiro para o dado armazenado. Em caso de falha ele retorna `NULL`.
+  - `(void *)`: releases the list node and returns the pointer to the stored data. In case of failure it returns `NULL`.
 
 - ## note:
-  Esta função não libera o dado retornado, lembre-se de libera-lo manualmente.
+  This function does not release the returned data, remember to release them manually.
 
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3]*/
-int *data = list_remove( &list, 1);/*remove o elemento 2*/
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = list_remove( &list, 1);/*removes element 2*/
+free(data);
+data = NULL;
+```
+or using the **lst_remove** macro:
+```c
+List list = ... /*suppose a list with [1, 2, 3]*/
+int *data = list_remove( list, 1);/*removes element 2*/
 free(data);
 data = NULL;
 ```
 # **<a name=list_size>list_size</a>**  <h6>[back to indice](#index)</h6>
-Esta função retorna o numero de elementos de uma lista.
+This function returns the number of elements in a list.
 
 - ## function prototype :  
    
@@ -261,17 +312,16 @@ size_t list_size(List self);
 ```
 
 - ## parameters:
-  - self `(List)`: lista de origem.
+  - self `(List)`: source list.
 
 - ## returns:
-  - `(size_t)` : retorna o tamanho da lista ou 0 caso `self` ou `self->begin`sejam `NULL`.
+  - `(size_t)`: returns the size of the list or 0 if `self` or` self-> begin` are `NULL`.
   
 - ## example of use:
 ```c
-/*imagine uma lista com [1, 2, 3, 4]*/
-size_t size = list_size(list);/*retorna 4*/
+List list = ... /*suppose a list with [1, 2, 3, 4]*/
+size_t size = list_size(list);/*return 4*/
 ```
-
 # **<a name=version>Version</a>**  <h6>[back to indice](#index)</h6>
 
 - current version:
@@ -279,7 +329,6 @@ size_t size = list_size(list);/*retorna 4*/
 
 - previous versions:
   ~~<h5>1.0.01022019<h5>~~
-
 ---
 
 <p align="center">
