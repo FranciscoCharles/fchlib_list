@@ -87,9 +87,9 @@ List list_insert(List self, size_t index, void* data);
 ```c
 int *a=NULL, *b=NULL, *c=NULL;
 
-a = (int)malloc(sizeof int);
-b = (int)malloc(sizeof int);
-c = (int)malloc(sizeof int);
+a = (int)malloc(sizeof (int));
+b = (int)malloc(sizeof (int));
+c = (int)malloc(sizeof (int));
 
 *a = 9;
 *b = 10;
@@ -107,9 +107,9 @@ or using the **lst_insert** macro:
 ```c
 int *a=NULL, *b=NULL, *c=NULL;
 
-a = (int)malloc(sizeof int);
-b = (int)malloc(sizeof int);
-c = (int)malloc(sizeof int);
+a = (int)malloc(sizeof (int));
+b = (int)malloc(sizeof (int));
+c = (int)malloc(sizeof (int));
 
 *a = 9;
 *b = 10;
@@ -221,7 +221,7 @@ List list_push(List self, void* data);
 - ## example of use:
 ```c
 List list = ... /*suppose a list with [1, 2, 3]*/
-int *data = (int)malloc(sizeof int);
+int *data = (int)malloc(sizeof (int));
 *data = 4;
 list = list_push( list, data);
 data = NULL;
@@ -230,7 +230,7 @@ data = NULL;
 or using the **lst_push** macro:
 ```c
 List list = ... /*suppose a list with [1, 2, 3]*/
-int *data = (int)malloc(sizeof int);
+int *data = (int)malloc(sizeof (int));
 *data = 4;
 lst_push( list, data);
 data = NULL;
@@ -254,7 +254,7 @@ List list_push_back(List self, void* data);
 - ## example of use:
 ```c
 List list = ... /*suppose a list with [1, 2, 3]*/
-int *data = (int)malloc(sizeof int);
+int *data = (int)malloc(sizeof (int));
 *data = 4;
 list = list_push_back( list, data);
 data = NULL;
@@ -263,7 +263,7 @@ data = NULL;
 or using the **lst_push_back** macro:
 ```c
 List list = ... /*suppose a list with [1, 2, 3]*/
-int *data = (int)malloc(sizeof int);
+int *data = (int)malloc(sizeof (int));
 *data = 4;
 lst_push_back( list, data);
 data = NULL;
