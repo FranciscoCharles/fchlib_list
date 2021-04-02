@@ -11,7 +11,7 @@
 **fchlib_list** is a library written in C responsible for handling a double-linked list data structure. The library has a variety of data insertion and removal functions. The List structure offers support for generic types through pointer (void*).
 
 # <a name=index>Table of contents</a>
- 
+
 - [**list_delete**](#list_delete)
 - [**list_init**](#list_init)
 - [**list_insert**](#list_insert)
@@ -22,6 +22,8 @@
 - [**list_push_back**](#list_push_back)
 - [**list_remove**](#list_remove)
 - [**list_size**](#list_size)
+- [**How to iterate a list?**](#iterate_list)
+- [**Macros**](#macros)
 - [**Versions**](#version)
 
 # **<a name=list_delete>list_delete</a>**  <h6>[back to indice](#index)</h6>
@@ -322,6 +324,60 @@ size_t list_size(List self);
 List list = ... /*suppose a list with [1, 2, 3, 4]*/
 size_t size = list_size(list);/*return 4*/
 ```
+# **<a name=iterate_list>How to iterate a list?</a>**  <h6>[back to indice](#index)</h6>
+
+<p> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp To iterate over the elements of the list just use a variable of type <b>node_list</b> and iterate starting from the attribute <b>begin</b> or <b>end</b> of the list.
+</p>
+<p>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp To iterate the elements in the normal order, start from the <b>begin</b> attribute and use the <b>next</b> attribute to move to the next element until it reaches <b>NULL</b>.
+</p>
+
+- ## example of use:
+
+```c
+List list = ...
+node_list iterator = NULL;
+for(iterator=list->begin; iterator!=NULL; iterator=iterator->next) {
+  print_data(iterator);
+}
+```
+or using the **lst_begin** macro:
+```c
+List list = ...
+node_list iterator = NULL;
+for(iterator=lst_begin(list); iterator!=NULL; iterator=iterator->next) {
+  print_data(iterator);
+}
+```
+To iterate the elements in reverse order, start from the 'end' attribute and use the <b>prev</b> attribute to move to the next element until it reaches <b>NULL</b>.
+- ## example of use:
+```c
+List list = ...
+node_list iterator = NULL;
+for(iterator=list->end; iterator!=NULL; iterator=iterator->prev) {
+  print_data(iterator);
+}
+```
+or using the **lst_end** macro:
+```c
+List list = ...
+node_list iterator = NULL;
+for(iterator=lst_end(list); iterator!=NULL; iterator=iterator->prev) {
+  print_data(iterator);
+}
+```
+# **<a name=macros>Macros</a>**  <h6>[back to indice](#index)</h6>
+- [**lst_begin(self)**](#iterate_list)
+- [**lst_delete(self, free_data)**](#list_delete)
+- [**lst_end(self)**](#iterate_list)
+- [**lst_insert(self, index, data)**](#list_insert)
+- [**lst_push(self, data)**](#list_push)
+- [**lst_push_back(self, data)**](#list_push_back)
+- [**lst_pop(self)**](#list_pop)
+- [**lst_pop_begin(self)**](#list_pop_begin)
+- [**lst_remove(self, index)**](#list_remove)
+
+
 # **<a name=version>Version</a>**  <h6>[back to indice](#index)</h6>
 
 - current version:
