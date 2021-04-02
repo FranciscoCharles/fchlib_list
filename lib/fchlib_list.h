@@ -44,13 +44,15 @@ struct List {
 };
 
 /*shortcut macro*/
-#define lst_push(self, data) self=list_push(self,data)
-#define lst_push_back(self, data) self=list_push_back(self,data)
-#define lst_pop(self) list_pop(&self)
-#define lst_pop_begin(self) list_pop_begin(&self)
-#define lst_remove(self, index) list_remove(&self,index)
-#define lst_delete(self, free_data) self=list_delete(self,free_data)
-#define lst_insert(self, index, data) self=list_insert(self,index,data)
+#define lst_begin(self) (((self)!=NULL)?(self)->begin:NULL)
+#define lst_delete(self, free_data) (self)=list_delete((self),free_data)
+#define lst_end(self) (((self)!=NULL)?(self)->end:NULL)
+#define lst_insert(self, index, data) (self)=list_insert((self),index,data)
+#define lst_push(self, data) (self)=list_push((self),data)
+#define lst_push_back(self, data) (self)=list_push_back((self),data)
+#define lst_pop(self) list_pop(&(self))
+#define lst_pop_begin(self) list_pop_begin(&(self))
+#define lst_remove(self, index) list_remove(&(self),index)
 
 bool list_is_empty(List self);
 size_t list_size(List self);
